@@ -125,7 +125,7 @@ export default function Home() {
 						}}
 					>
 						<Image
-							src={"/hero-img.png"}
+							src={"hero-img.png"}
 							alt={""}
 							width={600}
 							height={800}
