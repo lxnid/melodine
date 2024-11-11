@@ -27,14 +27,14 @@ export default function App() {
 	useEffect(() => {
 		async function init() {
 			const temp = await getSearchData();
-			// console.log(temp);
+			console.log(temp);
 			setTrack(temp);
 			const temp_artists = await getArtists(temp);
 			setArtists(temp_artists);
 		}
 		init();
-		console.log(artists)
 	}, []);
+	console.log(artists)
 
 	function formatDuration(durationMs: number) {
 		const seconds = Math.floor((durationMs / 1000) % 60);
@@ -77,7 +77,7 @@ export default function App() {
 						: null}
 				</div>
 			</section>
-			<section className="w-auto">
+			{/* <section className="w-auto">
 				<h1 className="font-bold text-xl">Your favourite Artists</h1>
 				<div className="flex flex-col gap-1 mt-4">
 					{track
@@ -93,7 +93,7 @@ export default function App() {
 						  ))
 						: null}
 				</div>
-			</section>
+			</section> */}
 		</div>
 	);
 }
