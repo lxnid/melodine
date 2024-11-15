@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import getSearchData from "./api";
+import { getTracks } from "./api";
 import TrackPreview from "./components/TrackPreview";
 import { IoMdCloseCircle } from "react-icons/io";
 
@@ -41,7 +41,7 @@ export default function AppLayout({
 
 	const handleSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault();
-		const temp = await getSearchData(trackName);
+		const temp = await getTracks(trackName);
 		// console.log(temp);
 		setSearchData(temp);
 	};

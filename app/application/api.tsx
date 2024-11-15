@@ -3,15 +3,6 @@ const client_secret = "92b1f69814e644cc81d43a07d7ae5c4f";
 const base_url = "https://api.spotify.com/v1/";
 const TOKEN = await getToken();
 
-export default async function getSearchData(trackName?: string) {
-	if (trackName) {
-		const tracks = await getTracks(TOKEN.access_token, trackName);
-		return tracks;
-	} else {
-		const tracks = await getRecommended(TOKEN.access_token);
-		return tracks;
-	}
-}
 
 async function getToken() {
 	try {
@@ -35,13 +26,13 @@ async function getToken() {
 	}
 }
 
-async function getTracks(access_token: string, query: string) {
+export async function getTracks( query: string) {
 	try {
 		const response = await fetch(
 			`${base_url}search?q=${query}&type=track`,
 			{
 				method: "GET",
-				headers: { Authorization: "Bearer " + access_token },
+				headers: { Authorization: "Bearer " + TOKEN.access_token },
 			}
 		);
 
@@ -51,13 +42,13 @@ async function getTracks(access_token: string, query: string) {
 	}
 }
 
-async function getRecommended(access_token: string, retries:number = 3) {
+export async function getRecommended( retries:number = 3) {
 	try {
 		const response = await fetch(
 			`${base_url}recommendations?seed_genres=pop`,
 			{
 				method: "GET",
-				headers: { Authorization: "Bearer " + access_token },
+				headers: { Authorization: "Bearer " + TOKEN.access_token },
 			}
 		);
 
@@ -72,7 +63,7 @@ async function getRecommended(access_token: string, retries:number = 3) {
 			);
 			if (retries > 0) {
 				await new Promise((resolve) => setTimeout(resolve, waitTime));
-				return getRecommended(access_token, retries - 1); // Retry with one less attempt
+				return getRecommended(retries - 1); // Retry with one less attempt
 			} else {
 				console.error("Max retries reached");
 				return null;
@@ -100,13 +91,18 @@ export async function getArtists(tracks_data: TrackData) {
 	// console.log(data);
 
 	let constructor = "";
+	const uniqueIds = new Set();
 
 	for (const track in data) {
 		const subArtists = data[track].artists;
 		for (let i = 0; i < subArtists.length; i++) {
-			constructor += data[track].artists[i].id + ",";
+			uniqueIds.add(data[track].artists[i].id);
 		}
 	}
+
+	// Join unique IDs into a single string, separated by commas
+	constructor = Array.from(uniqueIds).slice(0,20).join(",");
+
 	// console.log(constructor);
 
 	try {

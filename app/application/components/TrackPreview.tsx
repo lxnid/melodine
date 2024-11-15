@@ -7,22 +7,31 @@ interface TrackDetails {
 	title: string;
 	artistName: string;
 	duration: string;
-    albumArtUrl: string;
-    index: number
+	albumArtUrl: string;
+	index: number;
 }
 
 const TrackPreview = ({
 	title,
 	artistName,
 	duration,
-    albumArtUrl,
-    index
+	albumArtUrl,
+	index,
 }: TrackDetails) => {
 	const [iconStatus, setIconStatus] = useState(true);
 	const [playStatus, setPlayStatus] = useState(true);
 	return (
 		<>
-			<motion.div initial={{opacity: 0,y: 50}} animate={{opacity: 1, y:0}} transition={{ease: 'easeInOut', duration: 0.5, delay: index/10+0.2}} className="w-[800px] rounded-lg h-14 flex overflow-hidden pr-8 hover:bg-[#303030] hover:scale-[1.02] transition ease-in-out duration-150 cursor-pointer">
+			<motion.div
+				initial={{ opacity: 0, y: 50 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{
+					ease: "easeInOut",
+					duration: 0.5,
+					delay: index / 10 + 0.2,
+				}}
+				className="w-[45vw] min-w-96 rounded-lg h-14 flex overflow-hidden pr-8 hover:bg-[#303030] hover:scale-[1.02] transition ease-in-out duration-150 cursor-pointer"
+			>
 				<Image
 					src={`${albumArtUrl}`}
 					width={100}
@@ -39,14 +48,24 @@ const TrackPreview = ({
 				</div>
 				<div className="flex justify-center items-center gap-10">
 					<p className="text-sm">{duration}</p>
-					<span onClick={() => {setIconStatus(false)}} className="cursor-pointer hover:text-red-700 transition-transform ease-in-out duration-200">
+					<span
+						onClick={() => {
+							setIconStatus(false);
+						}}
+						className="cursor-pointer hover:text-red-700 transition-transform ease-in-out duration-200"
+					>
 						{iconStatus ? (
 							<FaRegHeart className="text-lg" />
 						) : (
 							<FaHeart className="text-lg text-red-700" />
 						)}
 					</span>
-					<span onClick={() => {setPlayStatus(false)}} className="cursor-pointer">
+					<span
+						onClick={() => {
+							setPlayStatus(false);
+						}}
+						className="cursor-pointer"
+					>
 						{playStatus ? (
 							<FaPlay className="text-lg" />
 						) : (
