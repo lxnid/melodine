@@ -48,7 +48,7 @@ export default function Home() {
 					</Link>
 				</div>
 				<button className="px-5 py-1 md:block hidden rounded-full border-white border-2 hover:bg-white hover:text-black transition-colors ease-in-out duration-300">
-					<Link href={"/application"} className="text-sm">
+					<Link href={""} onClick={() => {console.log('error: app still under construction')}} className="text-sm">
 						Start Listening
 					</Link>
 				</button>
@@ -107,7 +107,8 @@ export default function Home() {
 							className="lg:px-5 px-3 py-1 w-fit rounded-full bg-white text-[#84074c] hover:bg-[#84074c00] hover:text-white hover:border-white border-2 transition-colors ease-in-out duration-300"
 						>
 							<Link
-								href={"/application"}
+								href={""}
+								onClick={() => {console.log('error: app still under construction')}}
 								className={`lg:text-sm text-xs ${poppins.className} font-bold z-50`}
 							>
 								Start Listening
