@@ -38,7 +38,8 @@ export default async function PlaylistsPage() {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/");
 
-  const initial = await getPlaylists((session as any).accessToken);
+  const accessToken = (session as any).accessToken as string | undefined;
+  const initial = await getPlaylists(accessToken);
 
   return (
     <main className="min-h-screen px-6 pt-28 max-w-6xl mx-auto">
@@ -50,7 +51,11 @@ export default async function PlaylistsPage() {
       </div>
 
       <section className="mt-8">
-        <PlaylistsGrid initialItems={initial?.items ?? []} initialNext={initial?.next ?? null} />
+        <PlaylistsGrid
+          initialItems={initial?.items ?? []}
+          initialNext={initial?.next ?? null}
+          accessToken={accessToken ?? ""}
+        />
       </section>
     </main>
   );
