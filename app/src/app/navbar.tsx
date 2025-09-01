@@ -17,6 +17,7 @@ export default function Navbar() {
           ) : session?.user ? (
             <>
               <Link href="/dashboard" className="glass rounded-full px-4 py-2 text-sm text-white/90">Dashboard</Link>
+              <Link href="/playlists" className="glass rounded-full px-4 py-2 text-sm text-white/90">Playlists</Link>
               {session.user.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={session.user.image} alt="avatar" className="h-8 w-8 rounded-full object-cover" />
