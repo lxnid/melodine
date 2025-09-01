@@ -74,27 +74,27 @@ export default function PlaylistsGrid({
       {items?.length ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map((pl) => (
-            <div key={pl.id} className="glass rounded-xl p-5 hover:scale-[1.01] transition-transform">
-              {pl.images?.[0]?.url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={pl.images[0].url}
-                  alt={`${pl.name} cover`}
-                  className="h-36 w-full rounded-lg mb-4 object-cover"
-                />
-              ) : (
-                <div
-                  className="h-36 w-full rounded-lg mb-4"
-                  style={{ background: "linear-gradient(135deg, rgba(139,92,246,.35), rgba(168,85,247,.25))" }}
-                />
-              )}
-              <div className="text-white/90 font-medium truncate">{pl.name}</div>
-              <div className="mt-1 text-white/60 text-xs line-clamp-2">
-                {typeof pl.tracks?.total === "number" ? `${pl.tracks.total} tracks` : ""}
-                {pl.owner?.display_name ? ` • by ${pl.owner.display_name}` : ""}
-              </div>
-            </div>
-          ))}
+            <a href={`/playlists/${pl.id}`} key={pl.id} className="block glass rounded-xl p-5 hover:scale-[1.01] transition-transform">
+               {pl.images?.[0]?.url ? (
+                 // eslint-disable-next-line @next/next/no-img-element
+                 <img
+                   src={pl.images[0].url}
+                   alt={`${pl.name} cover`}
+                   className="h-36 w-full rounded-lg mb-4 object-cover"
+                 />
+               ) : (
+                 <div
+                   className="h-36 w-full rounded-lg mb-4"
+                   style={{ background: "linear-gradient(135deg, rgba(139,92,246,.35), rgba(168,85,247,.25))" }}
+                 />
+               )}
+               <div className="text-white/90 font-medium truncate">{pl.name}</div>
+               <div className="mt-1 text-white/60 text-xs line-clamp-2">
+                 {typeof pl.tracks?.total === "number" ? `${pl.tracks.total} tracks` : ""}
+                 {pl.owner?.display_name ? ` • by ${pl.owner.display_name}` : ""}
+               </div>
+            </a>
+           ))}
 
           {loading &&
             Array.from({ length: 6 }).map((_, i) => (
