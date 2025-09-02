@@ -1,0 +1,10 @@
+node_modules
+.next/cache
+.next/trace
+.git
+.github
+.vscode
+Dockerfile
+*.log
+**/*.local.*
+.env*
