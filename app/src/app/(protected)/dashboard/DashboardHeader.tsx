@@ -49,7 +49,7 @@ export default function DashboardHeader({ userName, userImage, hasAuthError = fa
     <header className="sticky top-0 z-20 bg-black/50 backdrop-blur">
       <div className="px-6 py-4 flex items-center gap-4">
         {/* Brand (match landing navbar) */}
-        <Link href="/dashboard" className="hidden sm:flex items-center gap-3" onClick={(e) => { e.preventDefault(); triggerTransition(() => router.push("/dashboard")); }}>
+        <Link href="/dashboard" className="flex lg:hidden items-center gap-3" onClick={(e) => { e.preventDefault(); triggerTransition(() => router.push("/dashboard")); }}>
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
             <span className="text-white font-bold text-sm">M</span>
           </div>

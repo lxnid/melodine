@@ -6,13 +6,17 @@ export default function TransitionOverlay() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
+    let t: number | undefined;
     const on = () => {
       setShow(true);
-      const t = setTimeout(() => setShow(false), 600);
-      return () => clearTimeout(t);
+      if (t) window.clearTimeout(t);
+      t = window.setTimeout(() => setShow(false), 600);
     };
     window.addEventListener("route:transition", on as EventListener);
-    return () => window.removeEventListener("route:transition", on as EventListener);
+    return () => {
+      window.removeEventListener("route:transition", on as EventListener);
+      if (t) window.clearTimeout(t);
+    };
   }, []);
 
   return (
