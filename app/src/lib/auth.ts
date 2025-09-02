@@ -35,18 +35,6 @@ const refreshAccessToken = async (token: any) => {
   }
 };
 
-// Build a stable redirect URI that exactly matches what is configured in the Spotify app
-const resolvedBaseUrl = (
-  process.env.NEXTAUTH_URL ?? (process.env.NODE_ENV === "development" ? "http://localhost:3000" : "")
-).replace(/\/$/, "");
-
-if (!resolvedBaseUrl && process.env.NODE_ENV !== "development") {
-  // In production, NEXTAUTH_URL must be set to the public URL of the app (no trailing slash)
-  throw new Error("NEXTAUTH_URL is required in production and must be set to your public URL, e.g. https://your-app.onrender.com");
-}
-
-const spotifyRedirectUri = `${resolvedBaseUrl}/api/auth/callback/spotify`;
-
 export const authOptions: NextAuthOptions = {
   providers: [
     SpotifyProvider({
@@ -55,12 +43,10 @@ export const authOptions: NextAuthOptions = {
       authorization: {
         url: "https://accounts.spotify.com/authorize",
         params: {
-          // Keep scopes identical to your Spotify app configuration
           scope:
             "user-read-email,user-read-private,user-read-playback-state,user-modify-playback-state,user-read-currently-playing,user-read-recently-played,user-top-read,playlist-read-private,playlist-modify-private,playlist-modify-public,user-library-read",
           show_dialog: true,
-          // Force the exact redirect URI used during authorization so it matches your Spotify app settings
-          redirect_uri: spotifyRedirectUri,
+          // Do not set redirect_uri here at build-time; NextAuth will construct it from NEXTAUTH_URL at runtime
         },
       },
     }),
