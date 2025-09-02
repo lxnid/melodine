@@ -4,7 +4,7 @@ import Providers from "./providers";
 import "./globals.css";
 import Navbar from "./navbar";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import TransitionOverlay from "./transition-overlay";
 
 const geistSans = Geist({

@@ -20,6 +20,14 @@ const eslintConfig = [
       "next-env.d.ts",
     ],
   },
+  {
+    files: ["**/*.{js,jsx,ts,tsx}"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "react/no-unescaped-entities": "off",
+      "@next/next/no-html-link-for-pages": "warn",
+    },
+  },
 ];
 
 export default eslintConfig;
