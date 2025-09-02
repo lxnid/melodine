@@ -3,6 +3,7 @@
 import { SessionProvider } from "next-auth/react";
 import type { Session } from "next-auth";
 import React from "react";
+import { ToastProvider } from "@/components/ui/Toast";
 
 interface Props {
   children: React.ReactNode;
@@ -17,7 +18,9 @@ export default function Providers({ children, session }: Props) {
       refetchInterval={0}
       refetchWhenOffline={false}
     >
-      {children}
+      <ToastProvider>
+        {children}
+      </ToastProvider>
     </SessionProvider>
   );
 }

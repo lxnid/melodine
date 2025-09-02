@@ -34,7 +34,7 @@ async function getPlaylists(accessToken: string | undefined): Promise<PlaylistsR
   }
 }
 
-export default async function PlaylistsPage() {
+export default async function DashboardPlaylistsPage() {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/");
 
@@ -42,21 +42,26 @@ export default async function PlaylistsPage() {
   const initial = await getPlaylists(accessToken);
 
   return (
-    <main className="min-h-screen px-6 pt-28 max-w-6xl mx-auto">
-      <div className="flex items-end justify-between gap-4">
+    <main className="px-6 pt-6 pb-24 max-w-7xl mx-auto">
+      <div className="flex items-end justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-white/90">Playlists</h1>
-          <p className="mt-2 text-white/60">Your Spotify playlists. First 24 shown; load more available.</p>
+          <h1 className="text-3xl font-bold text-white/90">Your Library</h1>
+          <p className="mt-2 text-white/60">Your Spotify playlists and favorites</p>
         </div>
+        <button className="rounded-full px-5 py-2.5 text-sm text-white/90 font-medium bg-white/5 hover:bg-white/10 transition-colors">
+          <svg className="w-4 h-4 inline-block mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd"/>
+          </svg>
+          New Playlist
+        </button>
       </div>
 
-      <section className="mt-8">
-        <PlaylistsGrid
-          initialItems={initial?.items ?? []}
-          initialNext={initial?.next ?? null}
-          accessToken={accessToken ?? ""}
-        />
-      </section>
+      <PlaylistsGrid
+        initialItems={initial?.items ?? []}
+        initialNext={initial?.next ?? null}
+        accessToken={accessToken ?? ""}
+        hasInitialError={!initial}
+      />
     </main>
   );
 }

@@ -16,18 +16,18 @@ export default function Navbar() {
             <span className="text-sm text-white/60">Loading...</span>
           ) : session?.user ? (
             <>
-              <Link href="/dashboard" className="glass rounded-full px-4 py-2 text-sm text-white/90">Dashboard</Link>
-              <Link href="/playlists" className="glass rounded-full px-4 py-2 text-sm text-white/90">Playlists</Link>
+              <Link href="/dashboard" className="rounded-full px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors">Dashboard</Link>
+              <Link href="/dashboard/playlists" className="rounded-full px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors">Playlists</Link>
               {session.user.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={session.user.image} alt="avatar" className="h-8 w-8 rounded-full object-cover" />
               ) : null}
-              <button onClick={() => signOut({ callbackUrl: "/" })} className="glass rounded-full px-4 py-2 text-sm text-white/90">
+              <button onClick={() => signOut({ callbackUrl: "/" })} className="rounded-full px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors">
                 Sign out
               </button>
             </>
           ) : (
-            <button onClick={() => signIn("spotify", { callbackUrl: "/dashboard" })} className="glass rounded-full px-4 py-2 text-sm text-white/90">
+            <button onClick={() => signIn("spotify", { callbackUrl: "/dashboard" })} className="rounded-full px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors">
               Sign in
             </button>
           )}

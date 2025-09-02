@@ -11,7 +11,7 @@ type SpotifyProfile = {
 export default function ProfileCard({ profile }: { profile: SpotifyProfile }) {
   const avatar = profile.images?.[0]?.url;
   return (
-    <div className="glass rounded-xl p-6 flex items-center gap-4">
+    <div className="rounded-xl p-6 flex items-center gap-4 hover:bg-white/5 transition-colors">
       {avatar ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={avatar} alt="avatar" className="h-14 w-14 rounded-full object-cover" />

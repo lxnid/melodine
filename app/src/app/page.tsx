@@ -22,7 +22,7 @@ export default function Home() {
         <div className="mt-8">
           <button
             onClick={() => signIn("spotify", { callbackUrl: "/dashboard" })}
-            className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium shadow-lg"
+            className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium"
           >
             Explore
           </button>
@@ -32,7 +32,7 @@ export default function Home() {
       {/* Song list preview card */}
       <div className="relative z-10 mt-14 w-full max-w-3xl space-y-4">
         {["#7C3AED", "#EA580C", "#1D4ED8", "#16A34A"].map((c, i) => (
-          <div key={i} className="glass rounded-xl px-4 py-3 flex items-center justify-between">
+          <div key={i} className="rounded-xl px-4 py-3 flex items-center justify-between hover:bg-white/5 transition-colors">
             <div className="flex items-center gap-3">
               <span className="h-8 w-8 rounded-md" style={{ background: `linear-gradient(135deg, ${c}, rgba(255,255,255,.2))` }} />
               <div>
