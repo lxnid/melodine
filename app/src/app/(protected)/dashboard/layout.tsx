@@ -33,7 +33,7 @@ export default async function DashboardLayout({
           <DashboardHeader userName={userName} userImage={userImage} hasAuthError={!!authError} />
           
           {/* Scrollable content */}
-          <div className="flex-1 overflow-y-auto pb-20 lg:pb-0">
+          <div className="flex-1 overflow-y-auto pb-36 lg:pb-28">
             {children}
           </div>
         </main>

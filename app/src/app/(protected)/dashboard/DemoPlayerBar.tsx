@@ -107,26 +107,10 @@ export default function DemoPlayerBar() {
 
   return (
     <div className="fixed inset-x-0 bottom-12 lg:bottom-0 z-50 bg-black border-t border-white/10">
-      <div className="mx-auto max-w-7xl px-4 py-3">
-        <div className="flex items-center gap-4">
-          {/* Left: Now playing */}
-          <div className="flex items-center gap-3 min-w-0 flex-[1.2]">
-            <div className="h-12 w-12 rounded overflow-hidden bg-white/10 flex-shrink-0">
-              {image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={image} alt={title} className="h-full w-full object-cover" />
-              ) : (
-                <div className="h-full w-full" style={{ background: "linear-gradient(135deg, rgba(139,92,246,.6), rgba(168,85,247,.4))" }} />
-              )}
-            </div>
-            <div className="min-w-0">
-              <div className="truncate text-white/90 text-sm font-medium">{title}</div>
-              <div className="truncate text-white/60 text-xs">{artist}</div>
-            </div>
-          </div>
-
-          {/* Center: Transport + Timeline */}
-          <div className="flex-1 flex flex-col items-center gap-2">
+      <div className="relative mx-auto max-w-7xl px-4 py-3">
+        {/* Centered transport (absolute to be truly centered irrespective of left/right widths) */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+          <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-3">
               <button onClick={prevTrack} className="rounded-full h-9 w-9 flex items-center justify-center bg-white/10 text-white/90 hover:bg-white/20" aria-label="Previous">
                 <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M4.75 4a.75.75 0 01.75.75v10.5a.75.75 0 01-1.5 0V4.75A.75.75 0 014.75 4zM6.4 10.6l8.3 5.9a.75.75 0 001.2-.6V4.1a.75.75 0 00-1.2-.6l-8.3 5.9a.75.75 0 000 1.2z"/></svg>
@@ -147,7 +131,7 @@ export default function DemoPlayerBar() {
               </button>
             </div>
 
-            <div className="w-full flex items-center gap-3">
+            <div className="w-[62vw] max-w-[640px] min-w-[220px] flex items-center gap-3">
               <span className="text-[10px] text-white/60 w-10 tabular-nums text-right">{fmt(positionMs)}</span>
               <input
                 type="range"
@@ -161,6 +145,28 @@ export default function DemoPlayerBar() {
               <span className="text-[10px] text-white/60 w-10 tabular-nums">{fmt(durationMs)}</span>
             </div>
           </div>
+        </div>
+
+        {/* Flow content: left and right sections reserve space but center stays fixed */}
+        <div className="flex items-center gap-4">
+          {/* Left: Now playing */}
+          <div className="flex items-center gap-3 min-w-0 flex-[1.2]">
+            <div className="h-12 w-12 rounded overflow-hidden bg-white/10 flex-shrink-0">
+              {image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={image} alt={title} className="h-full w-full object-cover" />
+              ) : (
+                <div className="h-full w-full" style={{ background: "linear-gradient(135deg, rgba(139,92,246,.6), rgba(168,85,247,.4))" }} />
+              )}
+            </div>
+            <div className="min-w-0">
+              <div className="truncate text-white/90 text-sm font-medium">{title}</div>
+              <div className="truncate text-white/60 text-xs">{artist}</div>
+            </div>
+          </div>
+
+          {/* Spacer to balance center absolute block height */}
+          <div className="flex-1" />
 
           {/* Right: Volume */}
           <div className="hidden md:flex items-center gap-2 w-44 justify-end">
