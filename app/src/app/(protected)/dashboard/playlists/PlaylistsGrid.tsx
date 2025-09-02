@@ -92,66 +92,66 @@ export default function PlaylistsGrid({
   return (
     <div>
       {items?.length ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {items.map((pl) => (
             <a href={`/dashboard/playlists/${pl.id}`} key={pl.id} className="block rounded-xl hover:scale-[1.01] transition-transform group">
-              <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-3">
-                {pl.images?.[0]?.url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={pl.images[0].url}
-                    alt={`${pl.name} cover`}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                ) : (
-                  <div
-                    className="absolute inset-0"
-                    style={{ background: "linear-gradient(135deg, rgba(139,92,246,.35), rgba(168,85,247,.25))" }}
-                  />
-                )}
-                {/* Play overlay button */}
-                <button
-                  aria-label={`Play ${pl.name}`}
-                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); /* TODO: integrate player */ }}
-                  className="absolute bottom-3 right-3 h-10 w-10 rounded-full bg-green-500 text-white grid place-items-center opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all"
-                >
-                  ▶
-                </button>
-              </div>
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="text-white/90 font-medium truncate">{pl.name}</div>
-                  <div className="mt-1 text-white/60 text-xs line-clamp-2">
-                    {typeof pl.tracks?.total === "number" ? `${pl.tracks.total} tracks` : ""}
-                    {pl.owner?.display_name ? ` • by ${pl.owner.display_name}` : ""}
-                  </div>
-                </div>
-                {/* Context menu button */}
-                <button
-                  aria-label={`More options for ${pl.name}`}
-                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); /* TODO: open context menu */ }}
-                  className="rounded px-2 py-1 text-white/60 hover:text-white hover:bg-white/10"
-                >
-                  •••
-                </button>
-              </div>
-            </a>
-          ))}
+              <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-2 sm:mb-3">
+                 {pl.images?.[0]?.url ? (
+                   // eslint-disable-next-line @next/next/no-img-element
+                   <img
+                     src={pl.images[0].url}
+                     alt={`${pl.name} cover`}
+                     className="absolute inset-0 h-full w-full object-cover"
+                   />
+                 ) : (
+                   <div
+                     className="absolute inset-0"
+                     style={{ background: "linear-gradient(135deg, rgba(139,92,246,.35), rgba(168,85,247,.25))" }}
+                   />
+                 )}
+                 {/* Play overlay button */}
+                 <button
+                   aria-label={`Play ${pl.name}`}
+                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); /* TODO: integrate player */ }}
+                   className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-green-500 text-white grid place-items-center opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all"
+                 >
+                   ▶
+                 </button>
+               </div>
+               <div className="flex items-start justify-between gap-3">
+                 <div className="min-w-0">
+                   <div className="text-white/90 text-sm sm:text-base font-medium truncate">{pl.name}</div>
+                   <div className="mt-1 text-white/60 text-[11px] sm:text-xs line-clamp-2">
+                     {typeof pl.tracks?.total === "number" ? `${pl.tracks.total} tracks` : ""}
+                     {pl.owner?.display_name ? ` • by ${pl.owner.display_name}` : ""}
+                   </div>
+                 </div>
+                 {/* Context menu button */}
+                 <button
+                   aria-label={`More options for ${pl.name}`}
+                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); /* TODO: open context menu */ }}
+                   className="rounded px-2 py-1 text-white/60 hover:text-white hover:bg-white/10"
+                 >
+                   •••
+                 </button>
+               </div>
+             </a>
+           ))}
 
-          {loading &&
+           {loading &&
             Array.from({ length: 6 }).map((_, i) => (
               <div key={`skeleton-${i}`} className="rounded-xl animate-pulse">
-                <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-3">
-                  <div className="absolute inset-0 bg-white/10" />
-                </div>
-                <div className="h-4 w-3/5 bg-white/10 rounded" />
+                <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-2 sm:mb-3">
+                   <div className="absolute inset-0 bg-white/10" />
+                 </div>
+                <div className="h-3.5 sm:h-4 w-3/5 bg-white/10 rounded" />
                 <div className="mt-2 h-3 w-2/5 bg-white/10 rounded" />
-              </div>
-            ))}
-        </div>
-      ) : (
-        <div className="text-white/60 text-sm">No playlists found. Make sure your Spotify account has playlists or check scopes.</div>
-      )}
+               </div>
+             ))}
+         </div>
+       ) : (
+         <div className="text-white/60 text-sm">No playlists found. Make sure your Spotify account has playlists or check scopes.</div>
+       )}
 
       {error ? <div className="mt-4 text-xs text-red-300">{error}</div> : null}
 

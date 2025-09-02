@@ -11,11 +11,11 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden p-6">
+    <main className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden px-6 py-20 sm:py-24">
       {/* Glow gradients */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 right-0 h-[40vh] w-[60vw] rounded-full blur-3xl opacity-50" style={{ background: "radial-gradient(closest-side, rgba(168,85,247,.35), transparent)" }} />
-        <div className="absolute top-[30%] left-[-10%] h-[35vh] w-[45vw] rounded-full blur-3xl opacity-40" style={{ background: "radial-gradient(closest-side, rgba(139,92,246,.35), transparent)" }} />
+        <div className="absolute -top-24 right-0 h-[35vh] sm:h-[40vh] w-[70vw] sm:w-[60vw] rounded-full blur-3xl opacity-50" style={{ background: "radial-gradient(closest-side, rgba(168,85,247,.35), transparent)" }} />
+        <div className="absolute top-[30%] left-[-10%] h-[30vh] sm:h-[35vh] w-[55vw] sm:w-[45vw] rounded-full blur-3xl opacity-40" style={{ background: "radial-gradient(closest-side, rgba(139,92,246,.35), transparent)" }} />
       </div>
 
       {/* Hero */}
@@ -23,13 +23,13 @@ export default function Home() {
         <h1 className="text-white text-5xl sm:text-7xl font-extrabold leading-[1.1] tracking-tight">
           Discover.<span className="text-primary">Play</span>. Repeat.
         </h1>
-        <p className="mt-6 text-muted text-sm sm:text-base leading-relaxed">
+        <p className="mt-8 sm:mt-6 text-muted text-base sm:text-base leading-relaxed">
           Lose yourself in a world of music, curated just for you. Experience the freedom to explore and discover music like never before. Our intuitive interface and seamless navigation make it easy to find the perfect soundtrack for any occasion.
         </p>
-        <div className="mt-8">
+        <div className="mt-10 sm:mt-8">
           <button
             onClick={() => triggerTransition(() => signIn("spotify", { callbackUrl: "/dashboard" }))}
-            className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium"
+            className="btn-primary inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base sm:text-sm font-medium"
           >
             Explore
           </button>
@@ -37,7 +37,7 @@ export default function Home() {
       </section>
 
       {/* Song list preview card */}
-      <div className="relative z-10 mt-14 w-full max-w-3xl space-y-4">
+      <div className="relative z-10 mt-14 w-full max-w-md sm:max-w-3xl space-y-4">
         {["#7C3AED", "#EA580C", "#1D4ED8", "#16A34A"].map((c, i) => (
           <div key={i} className="rounded-xl px-4 py-3 flex items-center justify-between hover:bg-white/5 transition-colors">
             <div className="flex items-center gap-3">
