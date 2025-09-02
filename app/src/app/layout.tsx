@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "./navbar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import TransitionOverlay from "./transition-overlay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default async function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}>
         <Providers session={session}>
           <Navbar />
+          <TransitionOverlay />
           {children}
         </Providers>
       </body>

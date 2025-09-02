@@ -3,6 +3,13 @@
 import { signIn } from "next-auth/react";
 
 export default function Home() {
+  const triggerTransition = (cb: () => void) => {
+    try {
+      window.dispatchEvent(new CustomEvent("route:transition"));
+    } catch {}
+    setTimeout(cb, 500);
+  };
+
   return (
     <main className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden p-6">
       {/* Glow gradients */}
@@ -21,7 +28,7 @@ export default function Home() {
         </p>
         <div className="mt-8">
           <button
-            onClick={() => signIn("spotify", { callbackUrl: "/dashboard" })}
+            onClick={() => triggerTransition(() => signIn("spotify", { callbackUrl: "/dashboard" }))}
             className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium"
           >
             Explore

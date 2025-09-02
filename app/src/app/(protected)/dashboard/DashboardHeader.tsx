@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { signIn, signOut } from "next-auth/react";
+import Link from "next/link";
 
 export default function DashboardHeader({ userName, userImage, hasAuthError = false }: { userName?: string; userImage?: string; hasAuthError?: boolean }) {
   const [query, setQuery] = useState("");
@@ -11,6 +12,13 @@ export default function DashboardHeader({ userName, userImage, hasAuthError = fa
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const triggerTransition = (cb: () => void) => {
+    try {
+      window.dispatchEvent(new CustomEvent("route:transition"));
+    } catch {}
+    setTimeout(cb, 250);
+  };
 
   // Sync input with ?q= from /dashboard/search
   useEffect(() => {
@@ -34,12 +42,20 @@ export default function DashboardHeader({ userName, userImage, hasAuthError = fa
     e.preventDefault();
     const q = query.trim();
     if (!q) return;
-    router.push(`/dashboard/search?q=${encodeURIComponent(q)}`);
+    triggerTransition(() => router.push(`/dashboard/search?q=${encodeURIComponent(q)}`));
   };
 
   return (
     <header className="sticky top-0 z-20 bg-black/50 backdrop-blur">
       <div className="px-6 py-4 flex items-center gap-4">
+        {/* Brand (match landing navbar) */}
+        <Link href="/dashboard" className="hidden sm:flex items-center gap-3" onClick={(e) => { e.preventDefault(); triggerTransition(() => router.push("/dashboard")); }}>
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+            <span className="text-white font-bold text-sm">M</span>
+          </div>
+          <span className="text-white font-semibold text-lg">Melodine</span>
+        </Link>
+
         {/* Search */}
         <div className="flex-1">
           <form onSubmit={onSubmit} className="relative max-w-xl">
@@ -93,29 +109,29 @@ export default function DashboardHeader({ userName, userImage, hasAuthError = fa
               <div className="py-1">
                 <button
                   role="menuitem"
-                  className="w-full text-left px-3 py-2 text-sm text-white/90 hover:bg-white/10"
-                  onClick={() => router.push("/dashboard")}
+                  className="w-full text-left px-3 py-2 text-sm text-white/90 hover:bg:white/10"
+                  onClick={() => triggerTransition(() => router.push("/dashboard"))}
                 >
                   Home
                 </button>
                 <button
                   role="menuitem"
-                  className="w-full text-left px-3 py-2 text-sm text-white/90 hover:bg-white/10"
-                  onClick={() => router.push("/dashboard/library")}
+                  className="w-full text-left px-3 py-2 text-sm text-white/90 hover:bg:white/10"
+                  onClick={() => triggerTransition(() => router.push("/dashboard/library"))}
                 >
                   Your Library
                 </button>
                 <button
                   role="menuitem"
-                  className="w-full text-left px-3 py-2 text-sm text-white/90 hover:bg-white/10"
-                  onClick={() => signIn("spotify", { callbackUrl: "/dashboard" })}
+                  className="w-full text-left px-3 py-2 text-sm text-white/90 hover:bg:white/10"
+                  onClick={() => triggerTransition(() => signIn("spotify", { callbackUrl: "/dashboard" }))}
                 >
                   Reconnect Spotify
                 </button>
                 <div className="my-1 h-px bg-white/10" />
                 <button
                   role="menuitem"
-                  className="w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-white/10"
+                  className="w-full text-left px-3 py-2 text-sm text-red-400 hover:bg:white/10"
                   onClick={() => signOut({ callbackUrl: "/" })}
                 >
                   Sign out
@@ -131,7 +147,7 @@ export default function DashboardHeader({ userName, userImage, hasAuthError = fa
           <div className="rounded-md bg-amber-500/10 text-amber-200 text-xs sm:text-sm px-3 py-2 flex items-center justify-between gap-3">
             <span>Spotify session expired or missing permissions. Please reconnect.</span>
             <button
-              onClick={() => signIn("spotify", { callbackUrl: "/dashboard" })}
+              onClick={() => triggerTransition(() => signIn("spotify", { callbackUrl: "/dashboard" }))}
               className="rounded-full bg-amber-400/20 hover:bg-amber-400/30 text-amber-100 px-3 py-1 text-xs sm:text-sm"
             >
               Reconnect

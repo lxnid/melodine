@@ -2,22 +2,58 @@
 
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
   const loading = status === "loading";
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Hide global navbar within dashboard routes; dashboard layout renders its own header
+  if (pathname?.startsWith("/dashboard")) return null;
+
+  const triggerTransition = (cb: () => void) => {
+    try {
+      window.dispatchEvent(new CustomEvent("route:transition"));
+    } catch {}
+    setTimeout(cb, 500);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-20">
       <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="text-white/90 font-semibold tracking-wide">Melodine</Link>
+        <Link href="/" className="flex items-center gap-3">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+            <span className="text-white font-bold text-sm">M</span>
+          </div>
+          <span className="text-white font-semibold text-lg">Melodine</span>
+        </Link>
         <nav className="flex items-center gap-3">
           {loading ? (
             <span className="text-sm text-white/60">Loading...</span>
           ) : session?.user ? (
             <>
-              <Link href="/dashboard" className="rounded-full px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors">Dashboard</Link>
-              <Link href="/dashboard/playlists" className="rounded-full px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors">Playlists</Link>
+              <a
+                href="/dashboard"
+                onClick={(e) => {
+                  e.preventDefault();
+                  triggerTransition(() => router.push("/dashboard"));
+                }}
+                className="rounded-full px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors"
+              >
+                Dashboard
+              </a>
+              <a
+                href="/dashboard/playlists"
+                onClick={(e) => {
+                  e.preventDefault();
+                  triggerTransition(() => router.push("/dashboard/playlists"));
+                }}
+                className="rounded-full px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors"
+              >
+                Playlists
+              </a>
               {session.user.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={session.user.image} alt="avatar" className="h-8 w-8 rounded-full object-cover" />
@@ -27,7 +63,10 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <button onClick={() => signIn("spotify", { callbackUrl: "/dashboard" })} className="rounded-full px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors">
+            <button
+              onClick={() => triggerTransition(() => signIn("spotify", { callbackUrl: "/dashboard" }))}
+              className="rounded-full px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors"
+            >
               Sign in
             </button>
           )}
