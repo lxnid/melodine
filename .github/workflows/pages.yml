@@ -20,21 +20,23 @@ jobs:
     steps:
       - name: Prepare static site
         run: |
+          set -e
           mkdir -p site
-          if [ -n "${{ secrets.RENDER_APP_URL }}" ]; then
-            cat > site/index.html << 'EOF'
-            <!doctype html>
-            <html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${{ secrets.RENDER_APP_URL }}"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Redirecting…</title><style>body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; padding:2rem; line-height:1.6}</style></head><body><h1>Redirecting…</h1><p>If you are not redirected automatically, <a href="${{ secrets.RENDER_APP_URL }}">click here</a>.</p></body></html>
-            EOF
-            cat > site/404.html << 'EOF'
-            <!doctype html>
-            <html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${{ secrets.RENDER_APP_URL }}"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Not found</title></head><body></body></html>
-            EOF
+          URL="${{ secrets.RENDER_APP_URL }}"
+          if [ -n "$URL" ]; then
+            cat > site/index.html <<EOF
+<!doctype html>
+<html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=$URL"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Redirecting…</title><style>body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; padding:2rem; line-height:1.6}</style></head><body><h1>Redirecting…</h1><p>If you are not redirected automatically, <a href="$URL">click here</a>.</p></body></html>
+EOF
+            cat > site/404.html <<EOF
+<!doctype html>
+<html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=$URL"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Not found</title></head><body></body></html>
+EOF
           else
-            cat > site/index.html << 'EOF'
-            <!doctype html>
-            <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Melodine</title><style>body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; display:grid; place-items:center; min-height:100vh; margin:0; background:#0b0f17; color:#e6edf3;} a{color:#80caff;}</style></head><body><main><h1>Melodine</h1><p>The app backend is being deployed on Render.</p><p>Once ready, we will link it here.</p></main></body></html>
-            EOF
+            cat > site/index.html <<'EOF'
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Melodine</title><style>body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; display:grid; place-items:center; min-height:100vh; margin:0; background:#0b0f17; color:#e6edf3;} a{color:#80caff;}</style></head><body><main><h1>Melodine</h1><p>The app backend is being deployed on Render.</p><p>Once ready, we will link it here.</p></main></body></html>
+EOF
             cp site/index.html site/404.html
           fi
       - name: Upload artifact
