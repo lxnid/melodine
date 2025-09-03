@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0; url=https://melodine.onrender.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Melodine - Redirecting...</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 500px;
+            padding: 2rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #8b5cf6, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        p {
+            margin: 1rem 0;
+            line-height: 1.6;
+            color: #a1a1aa;
+        }
+        .redirect-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(90deg, #8b5cf6, #a855f7);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .redirect-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-top: 2px solid #8b5cf6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        // Immediate redirect with fallback
+        window.location.replace('https://melodine.onrender.com');
+        
+        // Fallback redirect after 2 seconds
+        setTimeout(function() {
+            window.location.href = 'https://melodine.onrender.com';
+        }, 2000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Melodine</h1>
+        <div class="spinner"></div>
+        <p>Redirecting to the application...</p>
+        <p>If you are not redirected automatically:</p>
+        <a href="https://melodine.onrender.com" class="redirect-link">Click here to access Melodine</a>
+    </div>
+</body>
+</html>
