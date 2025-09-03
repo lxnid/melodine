@@ -22,23 +22,118 @@ jobs:
         run: |
           set -e
           mkdir -p site
-          URL="${{ secrets.RENDER_APP_URL }}"
-          if [ -n "$URL" ]; then
-            cat > site/index.html <<EOF
+          APP_URL="https://melodine.onrender.com"
+          cat > site/index.html <<EOF
 <!doctype html>
-<html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=$URL"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Redirecting…</title><style>body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; padding:2rem; line-height:1.6}</style></head><body><h1>Redirecting…</h1><p>If you are not redirected automatically, <a href="$URL">click here</a>.</p></body></html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url=$APP_URL">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Melodine - Redirecting...</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Noto Sans', Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 500px;
+      padding: 2rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    h1 {
+      margin: 0 0 1rem 0;
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #8b5cf6, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    p {
+      margin: 1rem 0;
+      line-height: 1.6;
+      color: #a1a1aa;
+    }
+    .redirect-link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(90deg, #8b5cf6, #a855f7);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .redirect-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+    }
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(139, 92, 246, 0.3);
+      border-top: 2px solid #8b5cf6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 1rem auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <script>
+    // Immediate redirect with fallback
+    window.location.replace('$APP_URL');
+    
+    // Fallback redirect after 2 seconds
+    setTimeout(function() {
+      window.location.href = '$APP_URL';
+    }, 2000);
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Melodine</h1>
+    <div class="spinner"></div>
+    <p>Redirecting to the application...</p>
+    <p>If you are not redirected automatically:</p>
+    <a href="$APP_URL" class="redirect-link">Click here to access Melodine</a>
+  </div>
+</body>
+</html>
 EOF
-            cat > site/404.html <<EOF
+          cat > site/404.html <<EOF
 <!doctype html>
-<html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=$URL"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Not found</title></head><body></body></html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url=$APP_URL">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Melodine - Page Not Found</title>
+  <script>
+    window.location.replace('$APP_URL');
+  </script>
+</head>
+<body>
+  <p>Redirecting to <a href="$APP_URL">Melodine</a>...</p>
+</body>
+</html>
 EOF
-          else
-            cat > site/index.html <<'EOF'
-<!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Melodine</title><style>body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; display:grid; place-items:center; min-height:100vh; margin:0; background:#0b0f17; color:#e6edf3;} a{color:#80caff;}</style></head><body><main><h1>Melodine</h1><p>The app backend is being deployed on Render.</p><p>Once ready, we will link it here.</p></main></body></html>
-EOF
-            cp site/index.html site/404.html
-          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
